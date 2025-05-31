@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
+    .backgruond {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .section {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+    label {
+        display: block;
+        margin-bottom: 15px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    select {
+        width: 70%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+</style>
+</head>
+<body>
+<div class="backgruond">
+    <div class="section">
+        <label for="id">
+            <input type="text" id="id" name="id" placeholder="Enter ID" required>
+        </label>
+        <label for="password">
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+        </label>
+        <label for="name">
+            <input type="text" id="name" name="name" placeholder="Enter Name" required>
+        </label>
+        <label for="address">
+            <input type="text" id="address" name="address" placeholder="Enter Address" required>
+        </label>
+        <label for="country">
+            <select name="country" id="country">
+                <option value="Ukraina"><p>Ukraina</p></option>
+                <option value="Findland"><p>Findland</p></option>
+                <option value="Sweden"><p>Sweden</p></option>
+                <option value="German"><p>German</p></option>
+                <option value="Poland"><p>Poland</p></option>
+                <option value="Estonia"><p>Estonia</p></option>
+
+            </select>
+        </label>
+        <label for="index">
+            <input type="text" id="index" name="index" placeholder="Enter Index" required>
+        </label>
+        <label for="email">
+            <input type="email" id="email" name="email" placeholder="Enter Email" required>
+        </label>
+        <label for="gender">
+            <select name="gender" id="gender">
+                <option value="man"><p>Man</p></option>
+                <option value="woman"><p>Woman</p></option>
+            </select>
+        </label>
+        <label for="language">
+            <select name="language" id="language">
+                <option value="Ukraina"><p>Ukraina</p></option>
+                <option value="Findland"><p>Findland</p></option>
+                <option value="Sweden"><p>Sweden</p></option>
+                <option value="German"><p>German</p></option>
+                <option value="Poland"><p>Poland</p></option>
+                <option value="Estonia"><p>Estonia</p></option>
+            </select>
+        </label>
+        <label for="more_information">
+            <input type="text" id="more_information" name="more_information" placeholder="Enter More Information" required>
+        </label>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('input');
+    const selects = document.querySelectorAll('select');
+    const section = document.querySelector('.section');
+
+    // Додаємо кнопку для відправки
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Submit';
+    section.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+        let valid = true;
+        let message = '';
+
+        // Перевірка всіх input
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                valid = false;
+                message = 'Please fill in all fields!';
+            }
+            if (input.type === 'email' && input.value) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(input.value)) {
+                    valid = false;
+                    message = 'Emter current email!';
+                }
+            }
+            if (input.name === 'index' && input.value) {
+                if (!/^\d+$/.test(input.value)) {
+                    valid = false;
+                    message = 'Index must be a number!';
+                }
+            }
+        });
+
+        // Перевірка всіх select
+        selects.forEach(select => {
+            if (!select.value) {
+                valid = false;
+                message = 'Please select an option from all dropdowns!';
+            }
+        });
+
+        // Вивід результату
+        let result = document.querySelector('.result');
+        if (!result) {
+            result = document.createElement('div');
+            result.className = 'result';
+            section.appendChild(result);
+        }
+        result.style.color = valid ? 'green' : 'red';
+        result.textContent = valid ? 'Your form complet!' : message;
+    });
+});
+</script>
+</body>
+</html>
